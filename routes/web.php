@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/{id}', function ($id) {
+
+    $counters = DB::table('counters')
+    ->leftJoin('heroes', 'heroes.id', '=', 'counters.counterd_by')
+    ->select(
+        'heroes.name',
+        'counters.*'
+    )
+    ->where('counters.hero_id', '=', $id)
+    ->orderBy('counters.score', 'desc')
+    ->get();
+    
+    return $counters;
 });

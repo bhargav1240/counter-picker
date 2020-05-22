@@ -11,6 +11,20 @@ class CounterSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('counters')->insert([
+            'hero_id' => 2,
+            'counterd_by' => 7,
+            'score' => 1.17
+        ]);
+        DB::table('counters')->insert([
+            'hero_id' => 2,
+            'counterd_by' => 1,
+            'score' => 1.15
+        ]);
+        DB::table('counters')->insert([
+            'hero_id' => 2,
+            'counterd_by' => 8,
+            'score' => 0.60
+        ]);
     }
 }
