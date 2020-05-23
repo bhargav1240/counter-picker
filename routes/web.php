@@ -1,5 +1,6 @@
 <?php
 
+use App\Hero;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
     return view('welcome');
+});
+
+Route::get('/heroes', function(){
+    $data = Hero::all();
+    
+    return $data;
 });
 
 Route::get('/{id}', function ($id) {
