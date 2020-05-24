@@ -1,6 +1,7 @@
 <?php
 
 use App\Hero;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -25,13 +26,28 @@ Route::get('/heroes', function(){
     return $data;
 });
 
+Route::post('/on_select_hero', function (Request $request) {
+    
+    $data = DB::table('counters')
+    ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')
+    ->select(
+        'counters.*',
+        'heroes.name'
+    )
+    ->where('counters.hero_id', '=', $request->data)
+    ->orderBy('counters.score', 'desc')
+    ->get();
+
+    return $data;
+});
+
 Route::get('/{id}', function ($id) {
 
     $counters = DB::table('counters')
-    ->leftJoin('heroes', 'heroes.id', '=', 'counters.counterd_by')
+    ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')
     ->select(
-        'heroes.name',
-        'counters.*'
+        'counters.*',
+        'heroes.name'
     )
     ->where('counters.hero_id', '=', $id)
     ->orderBy('counters.score', 'desc')
