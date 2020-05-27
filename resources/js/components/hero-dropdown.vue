@@ -1,20 +1,25 @@
 <template>
     <div>
-        <div class="row">
-            <select name="" id="" v-model="selected_hero_id" @change="onSeelectHero()">
-                <option v-for="hero in heroes" v-bind:value="hero.id">{{ hero.name }}</option>
-            </select>
+        <div class="row mb-4">
+            <div class="col-4 mx-auto">
+                <select class="form-control" name="" id="" v-model="selected_hero_id" @change="onSeelectHero()">
+                    <option v-for="hero in heroes" v-bind:value="hero.id">{{ hero.name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" v-for="c in counterHeroes">
+            <div class="col-4 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        {{ c[0].name }}-{{c[0].score}}
+                    </div>
+                </div>
+                <br/>
+            </div>
         </div>
         
-        <div class="row">
-            <ul>
-                <li v-for="c in counterHeroes">{{ c.name }}
-                    <ul>
-                        <li>{{ c.score }}</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+
     </div>
 </template>
 
@@ -31,6 +36,7 @@ export default {
 
     mounted(){
         this.fetchHeroes();
+        this.onSeelectHero();
     },
 
     methods: {
@@ -42,9 +48,7 @@ export default {
             .catch(errors => console.log(errors));
         },
         onSeelectHero(){
-            axios.post(this.url + '/on_select_hero',{
-                data: this.selected_hero_id
-            })
+            axios.get(this.url + '/on_select_hero')
             .then(res => {
                 this.counterHeroes = res.data;
             })

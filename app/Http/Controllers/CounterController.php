@@ -15,17 +15,33 @@ class CounterController extends Controller
      */
     public function getCounterForSelectedHero(Request $request)
     {
-        $data = DB::table('counters')
-        ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')
-        ->select(
-            'counters.*',
-            'heroes.name'
-        )
-        ->where('counters.hero_id', '=', $request->data)
-        ->orderBy('counters.score', 'desc')
-        ->get();
+        $selectedHeroes = [1, 2];
+            
+        $data= DB::table('counters')
+            ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')
+            ->select(
+                'counters.*',
+                'heroes.name',
+            )
+            ->whereIn('counters.hero_id', $selectedHeroes)
+            ->orderBy('counters.score', 'desc')
+            ->get();
+            
+            $result = $data->groupBy('name')->toArray();
+            
+            $t=0;
+            
+            foreach ($result as $key => $value) {
+                if(count($value)>1){
+                    foreach ($value as $key => $v) {
+                        $t += $v->score;
+                    }
+                    $value[0]->score = $t;
+                }
+                
+            }
 
-        return $data;
+        return $result;
     }
 
     /**
