@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Counter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CounterController extends Controller
 {
@@ -12,9 +13,19 @@ class CounterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getCounterForSelectedHero(Request $request)
     {
-        //
+        $data = DB::table('counters')
+        ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')
+        ->select(
+            'counters.*',
+            'heroes.name'
+        )
+        ->where('counters.hero_id', '=', $request->data)
+        ->orderBy('counters.score', 'desc')
+        ->get();
+
+        return $data;
     }
 
     /**

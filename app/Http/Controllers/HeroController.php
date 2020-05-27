@@ -12,9 +12,11 @@ class HeroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAllHeroes()
     {
-        //
+        $data = Hero::all();
+    
+        return $data;
     }
 
     /**
