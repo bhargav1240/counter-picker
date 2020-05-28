@@ -26,10 +26,8 @@
             </div>
         </div>
 
-        {{ selected_heroes }}
-
         <div class="row" v-for="c in counterHeroes">
-            <div class="col-4 mx-auto">
+            <div class="col-8 mx-auto">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
