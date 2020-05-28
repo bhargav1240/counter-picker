@@ -12,7 +12,17 @@
             <div class="col-4 mx-auto">
                 <div class="card">
                     <div class="card-body">
-                        {{ c[0].name }}-{{c[0].score}}
+                        <div class="row">
+                            <div class="col">
+                                {{ c.count }}
+                            </div>
+                            <div class="col">
+                                {{ c.name }}
+                            </div>
+                            <div class="col">
+                                {{ c.score }}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br/>
@@ -51,6 +61,9 @@ export default {
             axios.get(this.url + '/on_select_hero')
             .then(res => {
                 this.counterHeroes = res.data;
+                this.counterHeroes.sort(function(a, b){
+                    return b.count - a.count;
+                });
             })
             .catch(errors => console.log(errors));
         }

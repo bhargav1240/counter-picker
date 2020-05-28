@@ -18,6 +18,7 @@ class CreateCountersTable extends Migration
             $table->integer('hero_id')->unsigned()->index();
             $table->integer('counterd_by');
             $table->float('score');
+            $table->integer('count')->default(0);
 
             $table->timestamps();
         });

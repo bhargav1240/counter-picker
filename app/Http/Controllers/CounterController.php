@@ -38,10 +38,18 @@ class CounterController extends Controller
                     }
                     $value[0]->score = $t;
                 }
-                
+                $value[0]->count = count($value);
             }
 
-        return $result;
+            $newArray = [];
+
+            $array = array_values($result);
+
+            foreach ($array as $key => $value) {
+                array_push($newArray,$value[0]);
+            }
+
+        return $newArray;
     }
 
     /**
