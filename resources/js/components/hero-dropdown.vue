@@ -80,9 +80,8 @@ export default {
             })
             .then(res => {
                 this.counterHeroes = res.data;
-                this.counterHeroes.sort(function(a, b){
-                    return b.count - a.count;
-                });
+                this.counterHeroes.sort((a, b) => b.score - a.score);
+                this.counterHeroes.sort((a, b) => b.count - a.count);
             })
             .catch(errors => console.log(errors));
         },
