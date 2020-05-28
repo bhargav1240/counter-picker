@@ -22,4 +22,4 @@ Route::get('/', function(){
 
 Route::get('/heroes', 'HeroController@getAllHeroes');
 
-Route::get('/on_select_hero', 'CounterController@getCounterForSelectedHero');
+Route::post('/on_select_hero', 'CounterController@getCounterForSelectedHero');

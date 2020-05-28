@@ -10,6 +10,10 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <!-- use the latest vue-select release -->
+<script src="https://unpkg.com/vue-select@latest"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
     </head>
     <body>
         <div class="flex-center position-ref full-height">

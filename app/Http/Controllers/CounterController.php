@@ -15,7 +15,10 @@ class CounterController extends Controller
      */
     public function getCounterForSelectedHero(Request $request)
     {
-        $selectedHeroes = [1, 2];
+        $selectedHeroes = [];
+        foreach($request->data as $data){
+            array_push($selectedHeroes, $data['id']);
+        }
             
         $data= DB::table('counters')
             ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')

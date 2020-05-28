@@ -1,16 +1,32 @@
 <template>
-    <div>
-        <div class="row mb-4">
-            <div class="col-4 mx-auto">
-                <select class="form-control" name="" id="" v-model="selected_hero_id" @change="addHeroToList(selected_hero_id)">
-                    <option v-for="hero in heroes" v-bind:value="hero.id">{{ hero.name }}</option>
-                </select>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="row m-4">
+                    <div class="col-sm-2">
+                        <button class="btn bnt-sm btn-primary" @click="
+                                                                    selected_heroes = []
+                                                                    counterHeroes = []
+                                                                    ">reset</button>
+                    </div>
+                    <div class="col-sm-8">
+                        <v-select
+                            multiple
+                            placeholder="Choose up to 5 Heroes!"
+                            v-model="selected_heroes"
+                            label="name"
+                            :options="heroes"
+                            :selectable="() => selected_heroes.length < 5"
+                            ></v-select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn bnt-sm btn-primary" @click="getCounterHeroes()">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
 
         {{ selected_heroes }}
-
-        <button class="btn bnt-sm btn-primary" @click="selected_heroes = []">reset</button>
 
         <div class="row" v-for="c in counterHeroes">
             <div class="col-4 mx-auto">
@@ -32,8 +48,6 @@
                 <br/>
             </div>
         </div>
-        
-
     </div>
 </template>
 
@@ -51,7 +65,6 @@ export default {
 
     mounted(){
         this.fetchHeroes();
-        this.onSeelectHero();
     },
 
     methods: {
@@ -59,11 +72,14 @@ export default {
             axios.get(this.url + '/heroes')
             .then(res => {
                 this.heroes = res.data;
+                console.log(this.heroes[0].name);
             })
             .catch(errors => console.log(errors));
         },
-        onSeelectHero(){
-            axios.get(this.url + '/on_select_hero')
+        getCounterHeroes(){
+            axios.post(this.url + '/on_select_hero',{
+                data: this.selected_heroes
+            })
             .then(res => {
                 this.counterHeroes = res.data;
                 this.counterHeroes.sort(function(a, b){
@@ -72,17 +88,17 @@ export default {
             })
             .catch(errors => console.log(errors));
         },
-        addHeroToList(id){
-            if(this.selected_heroes.length <= 4){
-                if(!this.selected_heroes.includes(id)){
-                    this.selected_heroes.push(id);
-                }else{
-                    alert(id + ' already exist');
-                }
-            }else{
-                alert('hero cant me more then 5');
-            }
-        }
+        // addHeroToList(id){
+        //     if(this.selected_heroes.length <= 4){
+        //         if(!this.selected_heroes.includes(id)){
+        //             this.selected_heroes.push(id);
+        //         }else{
+        //             alert(id + ' already exist');
+        //         }
+        //     }else{
+        //         alert('hero cant me more then 5');
+        //     }
+        // }
     },
 }
 </script>
