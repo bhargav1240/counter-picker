@@ -2,11 +2,15 @@
     <div>
         <div class="row mb-4">
             <div class="col-4 mx-auto">
-                <select class="form-control" name="" id="" v-model="selected_hero_id" @change="onSeelectHero()">
+                <select class="form-control" name="" id="" v-model="selected_hero_id" @change="addHeroToList(selected_hero_id)">
                     <option v-for="hero in heroes" v-bind:value="hero.id">{{ hero.name }}</option>
                 </select>
             </div>
         </div>
+
+        {{ selected_heroes }}
+
+        <button class="btn bnt-sm btn-primary" @click="selected_heroes = []">reset</button>
 
         <div class="row" v-for="c in counterHeroes">
             <div class="col-4 mx-auto">
@@ -40,6 +44,7 @@ export default {
             heroes: [],
             url: 'http://localhost/counter-picker/public',
             selected_hero_id: 0,
+            selected_heroes: [],
             counterHeroes: []
         }
     },
@@ -66,6 +71,17 @@ export default {
                 });
             })
             .catch(errors => console.log(errors));
+        },
+        addHeroToList(id){
+            if(this.selected_heroes.length <= 4){
+                if(!this.selected_heroes.includes(id)){
+                    this.selected_heroes.push(id);
+                }else{
+                    alert(id + ' already exist');
+                }
+            }else{
+                alert('hero cant me more then 5');
+            }
         }
     },
 }
