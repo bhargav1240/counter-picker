@@ -40,6 +40,7 @@ class CounterController extends Controller
                         $t += $v->score;
                     }
                     $value[0]->score = $t;
+                    $t=0;
                 }
                 $value[0]->count = count($value);
             }
