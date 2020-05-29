@@ -85,17 +85,6 @@ export default {
             })
             .catch(errors => console.log(errors));
         },
-        // addHeroToList(id){
-        //     if(this.selected_heroes.length <= 4){
-        //         if(!this.selected_heroes.includes(id)){
-        //             this.selected_heroes.push(id);
-        //         }else{
-        //             alert(id + ' already exist');
-        //         }
-        //     }else{
-        //         alert('hero cant me more then 5');
-        //     }
-        // }
     },
 }
 </script>
