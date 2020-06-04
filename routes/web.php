@@ -20,6 +20,10 @@ Route::get('/', function(){
     return view('welcome');
 });
 
+Route::get('/home', function(){
+    return view('home');
+});
+
 Route::get('/heroes', 'HeroController@getAllHeroes');
 
 Route::post('/on_select_hero', 'CounterController@getCounterForSelectedHero');
