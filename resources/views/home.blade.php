@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="app" class="content">
+<div class="content">
     <hero-dropdown></hero-dropdown>
 </div>
 

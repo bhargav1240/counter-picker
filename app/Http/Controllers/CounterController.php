@@ -56,6 +56,19 @@ class CounterController extends Controller
         return $newArray;
     }
 
+    public function getCounterForSelectedHero2(Request $request){
+        $data= DB::table('counters')
+            ->leftJoin('heroes', 'counters.counterd_by', '=', 'heroes.id')
+            ->select(
+                'counters.*',
+                'heroes.name',
+            )
+            ->where('counters.hero_id', $request->data)
+            ->orderBy('counters.score', 'desc')
+            ->get();
+
+        return $data;
+    }
     /**
      * Show the form for creating a new resource.
      *

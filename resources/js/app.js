@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('hero-dropdown', require('./components/hero-dropdown.vue').default);
+Vue.component('all-heroes', require('./components/all-heroes.vue').default);
 Vue.component('v-select', require('vue-select').default);
 
 /**
