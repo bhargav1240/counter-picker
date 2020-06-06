@@ -9,11 +9,11 @@
     </div>
 
     <div v-if="toggleHeroView == false" class="d-flex align-content-around flex-wrap">
-        <div style="width: 150px;" v-for="hero in filteredHeroes" class="m-2 p-2 bd-highlight bg-info" @click="getCountersForSelectedHero(hero)">{{ hero.name }}</div>
+        <div style="width: 150px;" v-for="h in filteredHeroes" class="m-2 p-2 bd-highlight bg-info" @click="selectHero(h)">{{ h.name }}</div>
     </div>
 
     <div v-if="toggleHeroView == true">
-        <div class="mb-4">{{hero.name}}</div>
+        <div class="mb-4">{{selectedHero.name}}</div>
 
         <div class="d-flex align-content-around flex-wrap">
             <div style="width: 250px;" v-for="counterHero in listOfCounterHeroes" class="m-2 p-2 bd-highlight bg-info" >
@@ -39,7 +39,7 @@ export default {
         return{
             counterHero: {},
             toggleHeroView: false,
-            hero: {},
+            selectedHero: {},
             search:'',
             heroes: [],
             url: 'http://localhost/counter-picker/public',
@@ -69,10 +69,10 @@ export default {
             })
             .catch(errors => console.log(errors));
         },
-        getCountersForSelectedHero(hero){
-            this.hero = hero;
+        selectHero(h){
+            this.selectedHero = h;
             axios.post(this.url + '/get_counters_for_selected_hero',{
-                data: hero.id
+                data: this.selectedHero.id
             })
             .then(res => {
                 this.listOfCounterHeroes = res.data;
