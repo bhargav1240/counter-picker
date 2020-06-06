@@ -16,13 +16,12 @@
         <div class="mb-4">{{hero.name}}</div>
 
         <div class="d-flex align-content-around flex-wrap">
-            <div style="width: 250px;" v-for="counterHero in listOfCounterHeroes" class="m-2 p-2 bd-highlight bg-info" >
-                {{ counterHero.name }}
+            <div style="width: 100%" v-for="counterHero in listOfCounterHeroes" class="m-2 p-2 bd-highlight bg-info" >
                 <v-select
                     label="name"
                     :options="heroes"
-                    :value="counterHero.name"
-                    @input="setSelected(counterHero)"
+                    :value="heroes.name"
+                    @input="selected_counter_hero => selectCounterHero(counterHero ,selected_counter_hero)"
                     ></v-select>
             </div>
             <div style="width: 150px;" class="m-2 p-2 bd-highlight bg-info text-center" @click="addHeroToCounters()">+</div>
@@ -65,7 +64,6 @@ export default {
         axios.get(this.url + '/get_all_heroes_details')
             .then(res => {
                 this.heroes = res.data;
-                console.log(this.heroes[0].name);
             })
             .catch(errors => console.log(errors));
         },
@@ -91,10 +89,13 @@ export default {
                 "name":""
                 })
         },
-        setSelected(item){
-            item.hero_id = this.hero.id;
-            item.counterd_by = this.selected_counter_hero.id;
-            item.name = this.selected_counter_hero.name;
+        selectCounterHero(counterHero ,selected_counter_hero){
+            // console.log(counterHero);
+            // console.log(selected_counter_hero);
+
+            counterHero.hero_id = this.hero.id;
+            counterHero.counterd_by = selected_counter_hero.id;
+            counterHero.name = selected_counter_hero.name;
         },
         saveHeroToCounters(){
             axios.post(this.url + '/save_counters_for_selected_hero',{

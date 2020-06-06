@@ -1975,7 +1975,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2010,7 +2009,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get(this.url + '/get_all_heroes_details').then(function (res) {
         _this2.heroes = res.data;
-        console.log(_this2.heroes[0].name);
       })["catch"](function (errors) {
         return console.log(errors);
       });
@@ -2039,10 +2037,12 @@ __webpack_require__.r(__webpack_exports__);
         "name": ""
       });
     },
-    setSelected: function setSelected(item) {
-      item.hero_id = this.hero.id;
-      item.counterd_by = this.selected_counter_hero.id;
-      item.name = this.selected_counter_hero.name;
+    selectCounterHero: function selectCounterHero(counterHero, selected_counter_hero) {
+      // console.log(counterHero);
+      // console.log(selected_counter_hero);
+      counterHero.hero_id = this.hero.id;
+      counterHero.counterd_by = selected_counter_hero.id;
+      counterHero.name = selected_counter_hero.name;
     },
     saveHeroToCounters: function saveHeroToCounters() {
       axios.post(this.url + '/save_counters_for_selected_hero', {
@@ -37828,23 +37828,21 @@ var render = function() {
                   "div",
                   {
                     staticClass: "m-2 p-2 bd-highlight bg-info",
-                    staticStyle: { width: "250px" }
+                    staticStyle: { width: "100%" }
                   },
                   [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(counterHero.name) +
-                        "\n            "
-                    ),
                     _c("v-select", {
                       attrs: {
                         label: "name",
                         options: _vm.heroes,
-                        value: counterHero.name
+                        value: _vm.heroes.name
                       },
                       on: {
-                        input: function($event) {
-                          return _vm.setSelected(counterHero)
+                        input: function(selected_counter_hero) {
+                          return _vm.selectCounterHero(
+                            counterHero,
+                            selected_counter_hero
+                          )
                         }
                       }
                     })
