@@ -13,7 +13,7 @@
         </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="{{ url('/all_heroes') }}">
+        <a class="nav-link" href="{{ url('/get_all_heroes_view') }}">
             <span data-feather="hero"></span>
             Heroes
         </a>
