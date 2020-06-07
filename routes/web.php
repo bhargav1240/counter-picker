@@ -33,5 +33,6 @@ Route::get('/get_all_heroes_details', 'HeroController@getAllHeroes');
 
 Route::post('/get_counters_for_selected_hero', 'CounterController@getCounterForSelectedHero2');
 Route::post('/save_counters_for_selected_hero', 'CounterController@saveCounterForSelectedHero');
+Route::post('/delete_counters_for_selected_hero', 'CounterController@deleteCounterForSelectedHero');
 
 Route::post('/on_select_hero', 'CounterController@getCounterForSelectedHero');

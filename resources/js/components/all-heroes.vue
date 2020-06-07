@@ -13,22 +13,27 @@
     </div>
 
     <div v-if="toggleHeroView == true">
-        <div class="mb-4">{{hero.name}}</div>
-
-        <div class="d-flex align-content-around flex-wrap">
-            <div style="width: 100%" v-for="counterHero in listOfCounterHeroes" class="m-2 p-2 bd-highlight bg-info" >
-                <v-select
-                    label="name"
-                    :options="heroes"
-                    :value="heroes.name"
-                    @input="selected_counter_hero => selectCounterHero(counterHero ,selected_counter_hero)"
-                    ></v-select>
+        
+        <div class="h3 mb-4">{{hero.name}}</div>
+                
+            <div v-for="counterHero in listOfCounterHeroes" class="row w-100">
+                <div class="col-sm-10">
+                    <v-select
+                        label="name"
+                        :options="heroes"
+                        :value="counterHero.name"
+                        @input="selected_counter_hero => selectCounterHero(counterHero ,selected_counter_hero)"
+                        ></v-select>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-sm btn-danger" @click="deleteCounterHero(counterHero)">Delete</button>
+                </div>
             </div>
+            
             <div style="width: 150px;" class="m-2 p-2 bd-highlight bg-info text-center" @click="addHeroToCounters()">+</div>
             <div style="width: 150px;" class="m-2 p-2 bd-highlight bg-info text-center" @click="saveHeroToCounters()">Save</div>
+        
         </div>
-    </div>
-
     </div>
 </template>
 
@@ -70,7 +75,7 @@ export default {
         getCountersForSelectedHero(hero){
             this.hero = hero;
             axios.post(this.url + '/get_counters_for_selected_hero',{
-                data: hero.id
+                data: hero
             })
             .then(res => {
                 this.listOfCounterHeroes = res.data;
@@ -90,9 +95,6 @@ export default {
                 })
         },
         selectCounterHero(counterHero ,selected_counter_hero){
-            // console.log(counterHero);
-            // console.log(selected_counter_hero);
-
             counterHero.hero_id = this.hero.id;
             counterHero.counterd_by = selected_counter_hero.id;
             counterHero.name = selected_counter_hero.name;
@@ -102,7 +104,19 @@ export default {
                 data: this.listOfCounterHeroes
             })
             .then(res => {
-
+                this.listOfCounterHeroes = res.data;
+                this.toggleHeroView = false;
+                this.search = '';
+            })
+            .catch(errors => console.log(errors));
+        },
+        deleteCounterHero(h){
+            axios.post(this.url + '/delete_counters_for_selected_hero',{
+                data: h
+            })
+            .then(res => {
+                this.listOfCounterHeroes = res.data;
+                this.toggleHeroView = true;
             })
             .catch(errors => console.log(errors));
         }

@@ -1975,6 +1975,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2018,7 +2023,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.hero = hero;
       axios.post(this.url + '/get_counters_for_selected_hero', {
-        data: hero.id
+        data: hero
       }).then(function (res) {
         _this3.listOfCounterHeroes = res.data;
         _this3.toggleHeroView = true;
@@ -2038,16 +2043,32 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     selectCounterHero: function selectCounterHero(counterHero, selected_counter_hero) {
-      // console.log(counterHero);
-      // console.log(selected_counter_hero);
       counterHero.hero_id = this.hero.id;
       counterHero.counterd_by = selected_counter_hero.id;
       counterHero.name = selected_counter_hero.name;
     },
     saveHeroToCounters: function saveHeroToCounters() {
+      var _this4 = this;
+
       axios.post(this.url + '/save_counters_for_selected_hero', {
         data: this.listOfCounterHeroes
-      }).then(function (res) {})["catch"](function (errors) {
+      }).then(function (res) {
+        _this4.listOfCounterHeroes = res.data;
+        _this4.toggleHeroView = false;
+        _this4.search = '';
+      })["catch"](function (errors) {
+        return console.log(errors);
+      });
+    },
+    deleteCounterHero: function deleteCounterHero(h) {
+      var _this5 = this;
+
+      axios.post(this.url + '/delete_counters_for_selected_hero', {
+        data: h
+      }).then(function (res) {
+        _this5.listOfCounterHeroes = res.data;
+        _this5.toggleHeroView = true;
+      })["catch"](function (errors) {
         return console.log(errors);
       });
     }
@@ -37816,26 +37837,24 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.toggleHeroView == true
-      ? _c("div", [
-          _c("div", { staticClass: "mb-4" }, [_vm._v(_vm._s(_vm.hero.name))]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "d-flex align-content-around flex-wrap" },
-            [
-              _vm._l(_vm.listOfCounterHeroes, function(counterHero) {
-                return _c(
+      ? _c(
+          "div",
+          [
+            _c("div", { staticClass: "h3 mb-4" }, [
+              _vm._v(_vm._s(_vm.hero.name))
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.listOfCounterHeroes, function(counterHero) {
+              return _c("div", { staticClass: "row w-100" }, [
+                _c(
                   "div",
-                  {
-                    staticClass: "m-2 p-2 bd-highlight bg-info",
-                    staticStyle: { width: "100%" }
-                  },
+                  { staticClass: "col-sm-10" },
                   [
                     _c("v-select", {
                       attrs: {
                         label: "name",
                         options: _vm.heroes,
-                        value: _vm.heroes.name
+                        value: counterHero.name
                       },
                       on: {
                         input: function(selected_counter_hero) {
@@ -37848,40 +37867,55 @@ var render = function() {
                     })
                   ],
                   1
-                )
-              }),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "m-2 p-2 bd-highlight bg-info text-center",
-                  staticStyle: { width: "150px" },
-                  on: {
-                    click: function($event) {
-                      return _vm.addHeroToCounters()
-                    }
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-2" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteCounterHero(counterHero)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ])
+              ])
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "m-2 p-2 bd-highlight bg-info text-center",
+                staticStyle: { width: "150px" },
+                on: {
+                  click: function($event) {
+                    return _vm.addHeroToCounters()
                   }
-                },
-                [_vm._v("+")]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "m-2 p-2 bd-highlight bg-info text-center",
-                  staticStyle: { width: "150px" },
-                  on: {
-                    click: function($event) {
-                      return _vm.saveHeroToCounters()
-                    }
+                }
+              },
+              [_vm._v("+")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "m-2 p-2 bd-highlight bg-info text-center",
+                staticStyle: { width: "150px" },
+                on: {
+                  click: function($event) {
+                    return _vm.saveHeroToCounters()
                   }
-                },
-                [_vm._v("Save")]
-              )
-            ],
-            2
-          )
-        ])
+                }
+              },
+              [_vm._v("Save")]
+            )
+          ],
+          2
+        )
       : _vm._e()
   ])
 }
