@@ -4,7 +4,7 @@
         <h1 class="h2">All Heroes</h1>    
     </div>
 
-    <div class="form-group">
+    <div v-if="toggleHeroView == false" class="form-group">
         <input type="text" class="form-control" v-model="search">
     </div>
 

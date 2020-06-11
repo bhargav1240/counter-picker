@@ -66,7 +66,7 @@ class CounterController extends Controller
                 'heroes.name',
             )
             ->where('counters.hero_id', $id)
-            ->orderBy('counters.score', 'desc')
+            ->orderBy('heroes.name')
             ->get();
 
         return $data;
