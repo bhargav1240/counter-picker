@@ -17,6 +17,7 @@ class CreateHeroesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('sf')->nullable();
+            $table->integer('counter_by_count')->unsigned()->nullable();
             $table->timestamps();
         });
     }

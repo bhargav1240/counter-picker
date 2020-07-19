@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Counter;
 use App\Hero;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,11 @@ class HeroController extends Controller
     public function getAllHeroes()
     {
         $data = Hero::all();
+
+        foreach ($data as $d) {
+            $d->counter_by_count = Counter::where('hero_id', '=', $d->id)->count();
+            $d->save();
+        }
     
         return $data;
     }

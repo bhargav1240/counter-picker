@@ -37824,14 +37824,23 @@ var render = function() {
               "div",
               {
                 staticClass: "m-2 p-2 bd-highlight bg-info",
-                staticStyle: { width: "150px" },
+                staticStyle: { width: "200px" },
                 on: {
                   click: function($event) {
                     return _vm.getCountersForSelectedHero(hero)
                   }
                 }
               },
-              [_vm._v(_vm._s(hero.name))]
+              [
+                _vm._v(_vm._s(hero.name) + " "),
+                hero.counter_by_count > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "ml-auto badge badge-secondary" },
+                      [_vm._v(_vm._s(hero.counter_by_count))]
+                    )
+                  : _vm._e()
+              ]
             )
           }),
           0
