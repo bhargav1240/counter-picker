@@ -72,18 +72,29 @@ class CounterController extends Controller
         return $data;
     }
     public function saveCounterForSelectedHero(Request $request){
-        foreach ($request->data as $d) {
+        
+        $data = $request->data;
+
+        $data = array_unique($data, SORT_REGULAR);
+
+        foreach ($data as $d) {
             if(isset($d['id'])){
-                $counter_hero = Counter::where('id', $d['id'])->first();
+                if(Counter::where([['hero_id', '=', $d['hero_id']] ,['counterd_by', '=', $d['counterd_by']]])->exists()){
+                    $counter_hero = Counter::where('id', $d['id'])->first();
+                    continue;
+                }
+                $counter_hero->hero_id = $d['hero_id'];
+                $counter_hero->counterd_by = $d['counterd_by'];
+                $counter_hero->score = 1;
+
+                $counter_hero->save();
             }else{
-                $counter_hero = new Counter();
+                $counter_hero = Counter::firstOrCreate([
+                    'hero_id' => $d['hero_id'],
+                    'counterd_by' => $d['counterd_by'],
+                    'score' => 1,
+                ]);
             }
-
-            $counter_hero->hero_id = $d['hero_id'];
-            $counter_hero->counterd_by = $d['counterd_by'];
-            $counter_hero->score = 1;
-
-            $counter_hero->save();
         }
 
         $hero = Hero::where('id', $counter_hero->hero_id)->first();
