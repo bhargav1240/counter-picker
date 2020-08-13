@@ -2053,7 +2053,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post(this.url + '/save_counters_for_selected_hero', {
         data: this.listOfCounterHeroes,
-        hero_id: this.hero.id
+        hero_id: this.hero
       }).then(function (res) {
         _this4.listOfCounterHeroes = res.data;
         _this4.toggleHeroView = false;
@@ -37854,7 +37854,11 @@ var render = function() {
           "div",
           [
             _c("div", { staticClass: "h3 mb-4" }, [
-              _vm._v(_vm._s(_vm.hero.name))
+              _vm._v(
+                _vm._s(_vm.hero.name) +
+                  " - " +
+                  _vm._s(_vm.listOfCounterHeroes.length)
+              )
             ]),
             _vm._v(" "),
             _vm._l(_vm.listOfCounterHeroes, function(counterHero) {

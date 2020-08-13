@@ -14,7 +14,7 @@
 
     <div v-if="toggleHeroView == true">
         
-        <div class="h3 mb-4">{{hero.name}}</div>
+        <div class="h3 mb-4">{{hero.name}} - {{ listOfCounterHeroes.length }}</div>
                 
             <div v-for="counterHero in listOfCounterHeroes" class="row w-100">
                 <div class="col-sm-10">
