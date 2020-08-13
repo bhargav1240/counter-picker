@@ -95,13 +95,15 @@ export default {
                 })
         },
         selectCounterHero(counterHero ,selected_counter_hero){
+            this.addHeroToCounters();
             counterHero.hero_id = this.hero.id;
             counterHero.counterd_by = selected_counter_hero.id;
             counterHero.name = selected_counter_hero.name;
         },
         saveHeroToCounters(){
             axios.post(this.url + '/save_counters_for_selected_hero',{
-                data: this.listOfCounterHeroes
+                data: this.listOfCounterHeroes,
+                hero_id: this.hero.id
             })
             .then(res => {
                 this.listOfCounterHeroes = res.data;

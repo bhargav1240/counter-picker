@@ -2043,6 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     selectCounterHero: function selectCounterHero(counterHero, selected_counter_hero) {
+      this.addHeroToCounters();
       counterHero.hero_id = this.hero.id;
       counterHero.counterd_by = selected_counter_hero.id;
       counterHero.name = selected_counter_hero.name;
@@ -2051,7 +2052,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.post(this.url + '/save_counters_for_selected_hero', {
-        data: this.listOfCounterHeroes
+        data: this.listOfCounterHeroes,
+        hero_id: this.hero.id
       }).then(function (res) {
         _this4.listOfCounterHeroes = res.data;
         _this4.toggleHeroView = false;
