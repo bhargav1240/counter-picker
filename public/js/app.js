@@ -2053,7 +2053,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post(this.url + '/save_counters_for_selected_hero', {
         data: this.listOfCounterHeroes,
-        hero_id: this.hero
+        hero_id: this.hero.id
       }).then(function (res) {
         _this4.listOfCounterHeroes = res.data;
         _this4.toggleHeroView = false;
@@ -37838,7 +37838,7 @@ var render = function() {
                 hero.counter_by_count > 0
                   ? _c(
                       "div",
-                      { staticClass: "ml-auto badge badge-secondary" },
+                      { staticClass: "float-right badge badge-secondary" },
                       [_vm._v(_vm._s(hero.counter_by_count))]
                     )
                   : _vm._e()

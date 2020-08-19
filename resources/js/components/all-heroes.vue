@@ -9,7 +9,7 @@
     </div>
 
     <div v-if="toggleHeroView == false" class="d-flex align-content-around flex-wrap">
-        <div style="width: 200px;" v-for="hero in filteredHeroes" class="m-2 p-2 bd-highlight bg-info" @click="getCountersForSelectedHero(hero)">{{ hero.name }} <div v-if="hero.counter_by_count > 0" class="ml-auto badge badge-secondary">{{ hero.counter_by_count }}</div></div>
+        <div style="width: 200px;" v-for="hero in filteredHeroes" class="m-2 p-2 bd-highlight bg-info" @click="getCountersForSelectedHero(hero)">{{ hero.name }} <div v-if="hero.counter_by_count > 0" class="float-right badge badge-secondary">{{ hero.counter_by_count }}</div></div>
     </div>
 
     <div v-if="toggleHeroView == true">
